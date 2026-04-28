@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Narasimha AI Challenge</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;900&display=swap" rel="stylesheet">
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: black;
+    color: white;
+    overflow-x: hidden;
+}
+
+/* 🔥 CURSOR GLOW */
+.cursor {
+    width: 20px;
+    height: 20px;
+    background: orange;
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    box-shadow: 0 0 20px orange;
+    z-index: 999;
+}
+
+/* HERO */
+.hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+    linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)),
+    url('./comp.png');
+
+    background-size: cover;
+    background-position: center 46%;
+    text-align: center;
+}
+
+.logo-left, .logo-right {
+    position: absolute;
+    top: 20px;
+}
+
+.logo-left { left: 20px; }
+.logo-right { right: 20px; }
+
+.logo-left img, .logo-right img {
+    height: 45px;
+}
+
+/* TEXT */
+.hero h1 {
+    font-size: 3rem;
+    color: gold;
+    text-shadow: 0 0 20px orange;
+}
+
+/* BUTTON */
+.btn {
+    margin-top: 20px;
+    padding: 15px 40px;
+    border-radius: 30px;
+    background: linear-gradient(45deg, orange, gold);
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 30px gold;
+}
+
+/* SECTIONS */
+.section {
+    padding: 80px 20px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: 1s;
+}
+
+.section.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.section h2 {
+    color: gold;
+}
+
+/* CARDS */
+.cards {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.card {
+    width: 250px;
+    padding: 20px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 15px;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 20px orange;
+}
+
+/* COUNTDOWN */
+.countdown {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.countdown div {
+    padding: 15px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+}
+
+.countdown span {
+    font-size: 1.5rem;
+    color: gold;
+}
+
+/* FOOTER */
+footer {
+    background: #111;
+    padding: 30px;
+}
+
+/* WHATSAPP */
+.whatsapp {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #25D366;
+    padding: 15px;
+    border-radius: 50%;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+    .hero h1 { font-size: 1.8rem; }
+}
+#fire {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 0;   /* behind content */
+    pointer-events: none;
+}
+
+/* make sure content is above sparks */
+.hero, .section, footer {
+    position: relative;
+    z-index: 1;
+}
+</style>
+</head>
+
+<body>
+    <canvas id="fire"></canvas>
+
+<div class="cursor"></div>
+
+<!-- HERO -->
+<div class="hero">
+    <div class="logo-left"><img src="prabhupada logo.png"></div>
+    <div class="logo-right"><img src="folk.png.png"></div>
+
+    <div>
+        <h1>Narasimha AI Challenge 🔥</h1>
+        <button class="btn" onclick="scrollToForm()">Participate</button>
+    </div>
+</div>
+
+<!-- ABOUT -->
+<div class="section">
+<h2>About</h2>
+<p>Create AI Images, Posters & Videos on Lord Narasimha</p>
+</div>
+
+<!-- CATEGORIES -->
+<div class="section">
+    <h2>What You Can Create</h2>
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>🎨 AI Image</h3>
+            <p>
+                Generate stunning AI artwork of Lord Narasimha using AI tools.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>🖼️ AI Poster</h3>
+            <p>
+                Design creative posters combining devotion and AI — add quotes, themes, and visual storytelling.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>🎬 AI Video</h3>
+            <p>
+                Create short AI-powered videos or reels expressing the glory and power of Lord Narasimha.
+            </p>
+        </div>
+
+    </div>
+</div>
+
+<!-- DEADLINE -->
+<div class="section">
+<h2>Deadline</h2>
+<p>30 April 2026 • 12 PM</p>
+
+<div class="countdown">
+<div><span id="d"></span><p>D</p></div>
+<div><span id="h"></span><p>H</p></div>
+<div><span id="m"></span><p>M</p></div>
+<div><span id="s"></span><p>S</p></div>
+</div>
+</div>
+
+<!-- FORM -->
+<div class="section" id="formSection">
+<h2>Submit</h2>
+<a href="https://docs.google.com/forms/d/e/1FAIpQLScJ9WunIJ4ddAMB4-htqcuXHd9cJBaDwD0Qxpq9KSi7omp37w/viewform?usp=header" target="_blank">
+<button class="btn">🚀 Submit Now</button>
+</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+<p>📞Contact: +91 91000 95178</p>
+<p>📧Email: mhkdasa@gmail.com</p>
+</footer>
+
+<a href="https://wa.me/919100095178" class="whatsapp">💬</a>
+
+<script>
+
+/* SCROLL */
+function scrollToForm(){
+document.getElementById("formSection").scrollIntoView({behavior:"smooth"});
+}
+
+/* COUNTDOWN */
+const end = new Date("April 30, 2026 12:00:00").getTime();
+setInterval(()=>{
+let now = new Date().getTime();
+let diff = end - now;
+
+document.getElementById("d").innerText = Math.floor(diff/(1000*60*60*24));
+document.getElementById("h").innerText = Math.floor((diff/(1000*60*60))%24);
+document.getElementById("m").innerText = Math.floor((diff/(1000*60))%60);
+document.getElementById("s").innerText = Math.floor((diff/1000)%60);
+},1000);
+
+/* SCROLL ANIMATION */
+const sections = document.querySelectorAll(".section");
+window.addEventListener("scroll",()=>{
+sections.forEach(sec=>{
+const pos = sec.getBoundingClientRect().top;
+if(pos < window.innerHeight - 100){
+sec.classList.add("show");
+}
+});
+});
+
+/* CURSOR */
+const cursor = document.querySelector(".cursor");
+document.addEventListener("mousemove", e=>{
+cursor.style.top = e.clientY + "px";
+cursor.style.left = e.clientX + "px";
+});
+
+const canvas = document.getElementById("fire");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let sparks = [];
+
+/* create spark ANYWHERE (not just bottom) */
+function createSpark() {
+    return {
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 2 + 1,
+        speedY: Math.random() * 0.8 + 0.2,
+        speedX: (Math.random() - 0.5) * 0.5,
+        opacity: Math.random(),
+        fade: Math.random() * 0.01 + 0.003,
+        color: `rgba(255, ${Math.floor(Math.random()*180)}, 0,`
+    };
+}
+
+/* generate sparks */
+for (let i = 0; i < 150; i++) {
+    sparks.push(createSpark());
+}
+
+function animateFire() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    sparks.forEach((s, i) => {
+
+        ctx.beginPath();
+        ctx.fillStyle = s.color + s.opacity + ")";
+        ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+        ctx.fill();
+
+        // movement (floating in all directions)
+        s.y -= s.speedY;
+        s.x += s.speedX;
+
+        // fade
+        s.opacity -= s.fade;
+
+        // reset randomly anywhere
+        if (s.opacity <= 0) {
+            sparks[i] = createSpark();
+        }
+    });
+
+    requestAnimationFrame(animateFire);
+}
+
+animateFire();
+
+/* responsive */
+window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+
+</script>
+
+</body>
+</html>
